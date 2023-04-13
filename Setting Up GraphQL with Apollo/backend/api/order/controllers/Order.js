@@ -30,7 +30,7 @@ module.exports = {
       description: `Order ${new Date()} by ${ctx.state.user._id}`,
       source: token,
     });
-
+    
     // Register the order in the database
     const order = await strapi.services.order.create({
       user: ctx.state.user.id,

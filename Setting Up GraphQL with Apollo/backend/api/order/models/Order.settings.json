@@ -26,6 +26,15 @@
     },
     "address": {
       "type": "text"
+    },
+    "charge_id": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "user": {
+      "type": "string"
     }
   }
 }

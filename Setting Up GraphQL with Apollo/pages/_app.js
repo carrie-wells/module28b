@@ -4,18 +4,20 @@ import AppContext from "../components/context";
 import Home from "./index"
 import Layout from "../components/layout"
 import Cookie from "js-cookie"
-
-
+ 
+ 
 function MyApp(props){
-  var {cart,addItem,removeItem, user, setUser} = useContext(AppContext)
+  var {cart, addItem, removeItem, user, setUser, isAuthenticated} = useContext(AppContext)
   const [state,setState] = useState({cart:cart});
+  const [theUser,setTheUser] = useState({user:user});
+  const [isAuth,setIsAuth] = useState({isAuthenticated:isAuthenticated});
   const { Component, pageProps } = props;
-  
-  
-  setUser = (user) => {
-    setState({ user });
+    
+  setUser = (u) => {
+    setTheUser( {user:u} );
+    setIsAuth( {isAuthenticated:true} );
   };
-
+ 
   addItem = (item) => {
     let { items } = state.cart;
     //check for item already in cart
@@ -30,6 +32,7 @@ function MyApp(props){
       foundItem = false;
     }
     console.log(`Found Item value: ${JSON.stringify(foundItem)}`)
+ 
     // if item is not new, add to cart, set quantity to 1
     if (!foundItem) {
       //set quantity property to 1
@@ -59,6 +62,7 @@ function MyApp(props){
     console.log(`state reset to cart:${JSON.stringify(state)}`)
      
   };
+  
   removeItem = (item) => {
     let { items } = state.cart;
     //check for item already in cart
@@ -82,18 +86,20 @@ function MyApp(props){
     }
     setState({cart:newCart});
   }
-
+ 
   return (
     <AppContext.Provider value=
     {
-      {cart: state.cart, addItem: addItem, removeItem: removeItem,isAuthenticated:false,user:null,
-        setUser:(u)=>
-        {
-          alert(JSON.stringify(user));
-          setState({ user });
-          alert(JSON.stringify(user));
-        }
+      {
+        cart: state.cart, 
+        user: theUser.user,
+        addItem: addItem, 
+        removeItem: removeItem,
+        isUser:true,
+        isAuthenticated:isAuth.isAuthenticated,
+        setUser:setUser
       }}>
+ 
       <Head>
         <link
           rel="stylesheet"
@@ -106,11 +112,11 @@ function MyApp(props){
       <Layout>
           <Component {...pageProps} />
       </Layout>
-
+ 
     </AppContext.Provider>
   );
   
 }
-
-
+ 
+ 
 export default MyApp;

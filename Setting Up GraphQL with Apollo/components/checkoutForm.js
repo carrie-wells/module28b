@@ -39,6 +39,7 @@ function CheckoutForm() {
 
     const token = await stripe.createToken(cardElement);
     const userToken = Cookies.get("token");
+
     const response = await fetch(`${API_URL}/orders`, {
       method: "POST",
       headers: userToken && { Authorization: `Bearer ${userToken}` },
